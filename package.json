@@ -17,6 +17,8 @@
     "iced-coffee-script": "~1.3.0",
     "unzip" : "0.0.x",
     "request":"2.11.x"
-    },
-  "devDependencies": {}
+  },
+  "devDependencies": {
+      "mocha":"1.6.x"
+  }
 }
