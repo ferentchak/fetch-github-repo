@@ -1,6 +1,6 @@
 {
   "author": "Charles Ferentchak <cobrien@rallydev.com>",
-  "name": "rabt",
+  "name": "fetch-github-repo",
   "description": "A small node utility that grabs a GitHub repo and downloads it into a directory.",
   "version": "0.0.1",
   "homepage": "https://github.com/ferentchak/fetch-github-repo",
@@ -8,7 +8,7 @@
     "type": "git",
     "url": "git://github.com/ferentchak/fetch-github-repo.git"
   },
-  "main": "./lib",
+  "main": "index",
   "engines": {
     "node": "~0.6.14"
   },
