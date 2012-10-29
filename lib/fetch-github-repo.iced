@@ -8,14 +8,12 @@ module.exports = {
                 path:'.'
                 error: ()-> 
                 success:()->
-        url = 'https://github.com/'+args.organization+'/'+args.repo+'/zipball/master'
+
+        url = "https://github.com/#{args.organization} #{args.repo}/zipball/master"
         request url, 
             (error,response)-> 
-                if (!error && response.statusCode == 200) 
-                    console.log 'win'
+                if (!error && (response.statusCode == 200)) 
                     args.success()
                 else
-                    args.error()
-                
-        
+                    args.error("Status code #{response.statusCode} received")
 }
