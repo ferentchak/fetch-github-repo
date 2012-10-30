@@ -5,10 +5,9 @@ describe('Fetch Github Repo', ()->
     baseDir = 'temp'
     
     before ()->
-        fs.mkdirSync(baseDir)
-    
-    after ()->
-        fs.rmdirSync(baseDir)
+        try
+            fs.mkdirSync(baseDir)    
+        catch e
 
     it('Bad GitHub Organization', (done)->
         onSuccess = ()->
@@ -37,8 +36,8 @@ describe('Fetch Github Repo', ()->
             
         fetchGithubRepo.download
             organization:'ferentchak'
-            repo : 'fetch-github-repo',
-            path: './#{baseDir}/zork'
+            repo : 'ferentchak.github.com',
+            path: "./#{baseDir}/zork"
             success:onSuccess,
             error:onError
         
@@ -47,8 +46,8 @@ describe('Fetch Github Repo', ()->
     it 'Happy Path', (done)->
         fetchGithubRepo.download
             organization:'ferentchak'
-            repo : 'fetch-github-repo',
-            path: './#{baseDir}'
+            repo : "ferentchak.github.com",
+            path: "./#{baseDir}"
             success:done,
             error:done
         
