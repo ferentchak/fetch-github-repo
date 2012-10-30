@@ -1,5 +1,6 @@
+## Install 
 
-Install with `npm install fetch-github-repo`
+`npm install fetch-github-repo`
 
 ## API
 
