@@ -19,6 +19,7 @@
     "request":"2.11.x"
   },
   "devDependencies": {
-      "mocha":"1.6.x"
+      "mocha":"1.6.x",
+      "rimraf":"2.0.x"
   }
 }

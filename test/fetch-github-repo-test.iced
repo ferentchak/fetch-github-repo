@@ -2,6 +2,13 @@ assert = require("assert")
 fetchGithubRepo = require('../index.js')
 fs = require('fs')
 describe('Fetch Github Repo', ()->
+    baseDir = 'temp'
+    
+    before ()->
+        fs.mkdirSync(baseDir)
+    
+    after ()->
+        fs.rmdirSync(baseDir)
 
     it('Bad GitHub Organization', (done)->
         onSuccess = ()->
@@ -19,7 +26,7 @@ describe('Fetch Github Repo', ()->
         )
     )
   
-    it 'Bad directory', (done)->
+    it 'Bad directory in path', (done)->
         onSuccess = (message)->
             done("False positive")
         onError = (error)->
@@ -31,7 +38,7 @@ describe('Fetch Github Repo', ()->
         fetchGithubRepo.download
             organization:'ferentchak'
             repo : 'fetch-github-repo',
-            path: './temp/zork'
+            path: './#{baseDir}/zork'
             success:onSuccess,
             error:onError
         
@@ -41,7 +48,7 @@ describe('Fetch Github Repo', ()->
         fetchGithubRepo.download
             organization:'ferentchak'
             repo : 'fetch-github-repo',
-            path: './temp'
+            path: './#{baseDir}'
             success:done,
             error:done
         
