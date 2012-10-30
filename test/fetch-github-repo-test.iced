@@ -4,10 +4,10 @@ fs = require('fs')
 describe('Fetch Github Repo', ()->
 
     it('Bad GitHub Organization', (done)->
-        onSuccess = (message)->
+        onSuccess = ()->
                 done("False positive")
-        onError = (message)->
-                if message.match(/404/)
+        onError = (error)->
+                if error.message.match(/404/)
                     done()
                 else
                     done(new Error('Message not returned'))

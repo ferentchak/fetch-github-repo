@@ -26,7 +26,8 @@ module.exports = {
                 if (!error && (response.statusCode == 200)) 
                     request(zipUrl).pipe(unzipExtractor)                    
                 else
-                    args.error("Status code #{response.statusCode} received")
+                    args.error
+                        message:"Status code #{response.statusCode} received"
         )
                     
 }
