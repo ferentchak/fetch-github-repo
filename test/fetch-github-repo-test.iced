@@ -1,8 +1,9 @@
 assert = require("assert")
 fetchGithubRepo = require('../index.js')
+fs = require('fs')
 describe('Fetch Github Repo', ()->
-  describe('Make sure non-existant orgs fail gracefully', ()->
-    it('Bad Organization', (done)->
+
+    it('Bad GitHub Organization', (done)->
         onSuccess = (message)->
                 done("False positive")
         onError = (message)->
@@ -17,16 +18,29 @@ describe('Fetch Github Repo', ()->
             error:onError
         )
     )
-  )
-
-  describe('Happy Path', ()->
-    it('Happy Path', (done)->
-        fetchGithubRepo.download(
+  
+    it 'Bad directory', (done)->
+        onSuccess = (message)->
+            done("False positive")
+        onError = ()->
+            done()
+            
+        fetchGithubRepo.download
             organization:'ferentchak'
-            repo : 'fetch-github-repo'
-            success:done
-        )
-    )
-  )
-
+            repo : 'fetch-github-repo',
+            path: 'trash'
+            success:onSuccess,
+            error:onError
+        
+    
+    
+    it 'Happy Path', (done)->
+        fetchGithubRepo.download
+            organization:'ferentchak'
+            repo : 'fetch-github-repo',
+            path: '.'
+            success:done,
+            error:done
+        
+    
 )
