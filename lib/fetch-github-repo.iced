@@ -2,6 +2,7 @@ fs = require('fs');
 unzip = require('unzip')
 request = require('request')
 _ = require('underscore')
+
 module.exports = {
     download : (args)-> 
         args = _.defaults args, 
@@ -9,11 +10,20 @@ module.exports = {
                 error: ()-> 
                 success:()->
 
-        url = "https://github.com/#{args.organization} #{args.repo}/zipball/master"
-        request url, 
-            (error,response)-> 
+        url = "https://github.com/#{args.organization}/#{args.repo}"
+        zipUrl = "#{url}/zipball/master"
+        
+        unzipExtractor = unzip.Extract({ path: args.path });
+        unzipExtractor.on('error', (err)->
+            args.error(err)
+        )
+        unzipExtractor.on('end', args.success)
+        request(url, 
+            (error,response,body)-> 
                 if (!error && (response.statusCode == 200)) 
-                    args.success()
+                    request(zipUrl).pipe(unzipExtractor)                    
                 else
                     args.error("Status code #{response.statusCode} received")
+        )
+                    
 }

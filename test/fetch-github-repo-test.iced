@@ -22,8 +22,8 @@ describe('Fetch Github Repo', ()->
   describe('Happy Path', ()->
     it('Happy Path', (done)->
         fetchGithubRepo.download(
-            organization:'RallyCommunity'
-            repo : 'ForwardLookingIterationBoard'
+            organization:'ferentchak'
+            repo : 'fetch-github-repo'
             success:done
         )
     )
