@@ -22,13 +22,16 @@ describe('Fetch Github Repo', ()->
     it 'Bad directory', (done)->
         onSuccess = (message)->
             done("False positive")
-        onError = ()->
-            done()
+        onError = (error)->
+            if error.message.match(/unzipping/)
+                done()
+            else
+                done(new Error('Message not returned'))
             
         fetchGithubRepo.download
             organization:'ferentchak'
             repo : 'fetch-github-repo',
-            path: 'trash'
+            path: './temp/zork'
             success:onSuccess,
             error:onError
         
@@ -38,7 +41,7 @@ describe('Fetch Github Repo', ()->
         fetchGithubRepo.download
             organization:'ferentchak'
             repo : 'fetch-github-repo',
-            path: '.'
+            path: './temp'
             success:done,
             error:done
         

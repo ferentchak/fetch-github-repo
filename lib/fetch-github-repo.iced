@@ -12,10 +12,13 @@ module.exports = {
 
         url = "https://github.com/#{args.organization}/#{args.repo}"
         zipUrl = "#{url}/zipball/master"
-        
+
+            
         unzipExtractor = unzip.Extract({ path: args.path });
         unzipExtractor.on('error', (err)->
-            args.error(err)
+            args.error
+                message:'An Error occured unzipping the file.'
+                inner:err
         )
         unzipExtractor.on('end', args.success)
         request(url, 
