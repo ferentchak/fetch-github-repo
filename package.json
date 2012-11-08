@@ -23,6 +23,6 @@
       "rimraf":"2.0.x"
   },
   "scripts":{
-      "test":"mocha --compilers iced:iced-coffee-script"
+      "test":"mocha -t 10000 --compilers iced:iced-coffee-script"
   }
 }
