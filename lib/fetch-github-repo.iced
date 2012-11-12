@@ -1,33 +1,52 @@
-fs = require('fs');
+fs = require('fs')
 unzip = require('unzip')
 request = require('request')
 _ = require('underscore')
+wrench = require('wrench')
 
-module.exports = {
-    download : (args)-> 
-        args = _.defaults args, 
-                path:'.'
-                error: ()-> 
-                success:()->
+module.exports =
+  _match: (files,organization)->
+    for file in files
+      if file.indexOf(organization) > -1
+        return file
+    new Error 'Temp Zip File Not found'
 
-        url = "https://github.com/#{args.organization}/#{args.repo}"
-        zipUrl = "#{url}/zipball/master"
+  moveFilesFromZip:(path,organization,success,error)->
+    try
+      files = fs.readdirSync(path)
+      directory = path+"/"+@_match(files,organization)
+      repoContents = fs.readdirSync(directory)
 
-            
-        unzipExtractor = unzip.Extract({ path: args.path });
-        unzipExtractor.on('error', (err)->
-            args.error
-                message:'An Error occured unzipping the file.'
-                inner:err
-        )
-        unzipExtractor.on('end', args.success)
-        request(url, 
-            (error,response,body)-> 
-                if (!error && (response.statusCode == 200)) 
-                    request(zipUrl).pipe(unzipExtractor)                    
-                else
-                    args.error
-                        message:"Status code #{response.statusCode} received"
-        )
-                    
-}
+      for file in repoContents
+        fs.renameSync(directory+"/"+file, path+"/"+file)
+      success()
+    catch err
+      error(err)
+
+  download: (args)->
+    args = _.defaults args,
+      path: '.'
+      error: ()->
+      success: ()->
+
+    url = "https://github.com/#{args.organization}/#{args.repo}"
+    zipUrl = "#{url}/zipball/master"
+
+    unzipExtractor = unzip.Extract({ path: args.path })
+    unzipExtractor.on('error', (err)->
+      args.error
+        message: 'An Error occured unzipping the file.'
+        inner: err
+    )
+    unzipExtractor.on 'close', ()=>
+      @moveFilesFromZip(args.path,args.organization,args.success,args.error)
+
+    request(url,
+      (error, response, body)->
+        if (!error && (response.statusCode == 200))
+          request(zipUrl).pipe(unzipExtractor)
+        else
+          args.error
+            message: "Status code #{response.statusCode} received"
+      )
+
