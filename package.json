@@ -2,7 +2,7 @@
   "author": "Charles Ferentchak <cobrien@rallydev.com>",
   "name": "fetch-github-repo",
   "description": "A small node utility that grabs a GitHub repo and downloads it into a directory.",
-  "version": "0.0.2",
+  "version": "0.0.3",
   "homepage": "https://github.com/ferentchak/fetch-github-repo",
   "repository": {
     "type": "git",
