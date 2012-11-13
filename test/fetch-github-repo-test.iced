@@ -17,9 +17,7 @@ describe('Fetch Github Repo', ()->
     catch e
 
   it('Bad GitHub Organization', (done)->
-    onSuccess = ()->
-      done("False positive")
-    onError = (error)->
+    callback = (error)->
       if error.message.match(/404/)
         done()
       else
@@ -27,26 +25,23 @@ describe('Fetch Github Repo', ()->
     fetchGithubRepo.download(
       organization: 'RallyCozzzzzzzzmmunity'
       repo: 'ForwardLookingIterationBoard'
-      success: onSuccess,
-      error: onError
+      callback
     )
   )
 
   it 'Bad directory in path', (done)->
-    onSuccess = (message)->
-      done("False positive")
-    onError = (error)->
-      if error.message.match(/unzipping/)
+    callback = (error)->
+      if error.message.match(/Directory/)
         done()
       else
+        console.error(error)
         done(new Error('Message not returned'))
 
     fetchGithubRepo.download
       organization: 'ferentchak'
       repo: 'ferentchak.github.com',
       path: "./#{baseDir}/zork"
-      success: onSuccess,
-      error: onError
+      callback
 
 
   it 'Happy Path', (done)->
@@ -54,10 +49,9 @@ describe('Fetch Github Repo', ()->
       organization: 'ferentchak'
       repo: "ferentchak.github.com",
       path: "./#{baseDir}"
-      success: done,
-      error: done
+      done
 
   it 'Finds proper file to rename', ()->
-    result = fetchGithubRepo._match([ 'ferentchak-ferentchak.github.com-435ca81', 'zork' ],'ferentchak');
-    assert.strictEqual(result,'ferentchak-ferentchak.github.com-435ca81')
+    result = fetchGithubRepo.match([ 'ferentchak-ferentchak.github.com-435ca81', 'zork' ], 'ferentchak');
+    assert.strictEqual(result, 'ferentchak-ferentchak.github.com-435ca81')
 )

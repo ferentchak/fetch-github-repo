@@ -6,28 +6,30 @@
 
 JavaScript
 ```
-var fetchGitHubRepo;
+var FetchGithubRepo, callback;
 
-fetchGitHubRepo = require("fetch-github-repo");
+FetchGithubRepo = require("fetch-github-repo");
 
-fetchGithubRepo.download({
+callback = function(err) {};
+
+FetchGithubRepo.download({
   organization: 'ferentchak',
   repo: "ferentchak.github.com",
-  path: ".",
-  success: function() {},
-  error: function() {}
-});
+  path: "."
+}, callback);
 
 ```
 
 
 Coffee
-```fetchGithubRepo.download
+```
+FetchGithubRepo = require "fetch-github-repo"
+callback = (err)->
+FetchGithubRepo.download
   organization:'ferentchak'
   repo : "ferentchak.github.com",
   path: "."
-  success:()->
-  error:()->
+  callback
 ```
 
 
