@@ -11,9 +11,11 @@ module.exports =
     receiveFiles = (err, files)=>
       if err
         callback err
-      for file in files
-        fs.renameSync(directory + "/" + file, path + "/" + file)
-      wrench.rmdirRecursive(directory, callback)
+      else
+        await
+          for file in files
+            fs.rename(directory + "/" + file, path + "/" + file,defer file)
+        wrench.rmdirRecursive(directory, callback)
 
     fs.readdir(directory, receiveFiles)
 
@@ -29,7 +31,9 @@ module.exports =
     unzipExtractor.on('error', callback)
     unzipExtractor.on 'close', ()=>
       @moveFilesFromZip(path, organization,callback)
+
     zipUrl = @createZipUrl(organization,repo)
+
     request(zipUrl).pipe(unzipExtractor)
 
   validateRepoExists:(organization,repo,callback)->
