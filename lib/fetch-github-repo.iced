@@ -14,7 +14,7 @@ module.exports =
       else
         await
           for file in files
-            fs.rename(directory + "/" + file, path + "/" + file,defer file)
+            fs.rename(directory + "/" + file, path + "/" + file,defer())
         wrench.rmdirRecursive(directory, callback)
 
     fs.readdir(directory, receiveFiles)
