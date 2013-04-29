@@ -34,12 +34,11 @@ describe('Fetch Github Repo', ()->
       if error.message.match(/Directory/)
         done()
       else
-        console.error(error)
-        done(new Error('Message not returned'))
+        done(new Error("Message not returned. Call returned: #{error}"))
 
     fetchGithubRepo.download
       organization: 'ferentchak'
-      repo: 'ferentchak.github.com',
+      repo: 'fetch-github-repo',
       path: "./#{baseDir}/zork"
       callback
 
@@ -47,7 +46,7 @@ describe('Fetch Github Repo', ()->
   it 'Happy Path', (done)->
     fetchGithubRepo.download
       organization: 'ferentchak'
-      repo: "ferentchak.github.com",
+      repo: "fetch-github-repo",
       path: "./#{baseDir}"
       done
 

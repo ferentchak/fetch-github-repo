@@ -1,5 +1,7 @@
 ## Install 
 
+[![Build Status](https://travis-ci.org/ferentchak/fetch-github-repo.png?branch=master)](https://travis-ci.org/ferentchak/fetch-github-repo)
+
 `npm install fetch-github-repo`
 
 ## API
