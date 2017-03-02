@@ -2,7 +2,7 @@
   "author": "Charles Ferentchak <cobrien@rallydev.com>",
   "name": "fetch-github-repo",
   "description": "A small node utility that grabs a GitHub repo and downloads it into a directory.",
-  "version": "0.2.1",
+  "version": "0.2.2",
   "homepage": "https://github.com/ferentchak/fetch-github-repo",
   "repository": {
     "type": "git",
@@ -10,7 +10,7 @@
   },
   "main": "index",
   "engines": {
-    "node": ">0.6.14"
+    "node": ">0.10.32"
   },
   "dependencies": {
     "fs-extra": "2.0.0",
