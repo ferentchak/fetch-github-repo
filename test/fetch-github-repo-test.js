@@ -1,4 +1,4 @@
-var assert, fetchGithubRepo, fs, wrench;
+var assert, fetchGithubRepo, fs, fsextra;
 
 assert = require("assert");
 
@@ -6,7 +6,7 @@ fetchGithubRepo = require('../index.js');
 
 fs = require('fs');
 
-wrench = require('wrench');
+fsextra = require('fs-extra');
 
 describe('Fetch Github Repo', function() {
   var baseDir;
@@ -22,7 +22,7 @@ describe('Fetch Github Repo', function() {
   after(function() {
     var e;
     try {
-      return wrench.rmdirSyncRecursive(baseDir);
+      return fxextra.removeSync(baseDir);
     } catch (_error) {
       e = _error;
     }
